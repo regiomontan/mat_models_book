@@ -1,0 +1,101 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+SIR модель
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha : 0.001  $
+beta  : 0.1    $
+
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f(S,I,R) := -alpha*S*I         $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+g(S,I,R) := alpha*S*I - beta*I $
+h(S,I,R) := beta*I             $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+начальные условия:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+t0 : 0.0    $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+I0 : 1.0    $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+S0 : 499.0  $
+R0 : 0.0    $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tN : 100.0  $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+шаг интегрирования
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+tau : 0.1 $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+решение методом Рунге-Кутты
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+load( "dynamics" )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sys: rk( [ f(S,I,R), g(S,I,R), h(S,I,R) ], [ S, I, R ], [ S0, I0, R0  ], [ t , t0, tN, tau ] ) $ 
+tS   : makelist( [ sys[i][1] , sys[i][2] ],  i, 1, (tN - t0)/tau + 1 )   $
+tI   : makelist( [ sys[i][1] , sys[i][3] ],  i, 1, (tN - t0)/tau + 1 )   $
+tR   : makelist( [ sys[i][1] , sys[i][4] ],  i, 1, (tN - t0)/tau + 1 )   $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load( "draw" )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw2d(    /*terminal       = eps,*/
+            points_joined  = true, 
+            line_width     = 1, 
+            color          = dark-blue,
+            grid           = true, 
+            point_type     = 0, 
+            point_size     = 2,
+            key            = "S",
+            points( tS ),
+            color          = dark_red,
+            key            = "I",
+            points( tI ),
+            color          = dark_green,
+            key            = "R",
+            points( tR )
+       ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

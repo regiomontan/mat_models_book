@@ -1,0 +1,156 @@
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%=  Книга                                 =%%
+ %%=  Мат. комп. модели                     =%%
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \documentclass[12pt, a4paper, openany] {book}
+ \usepackage{vz_new_model}
+ \makeindex
+
+ \begin{document}
+ \pagecolor{background_color} % цвет фона
+ %% титул: %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \begin{titlepage}
+ {\phantom{I}}\vspace{2.0cm}
+
+ \begin{center}
+
+   \Large\bf\textsc
+   {
+    В.\,И.\,Зенкин \\
+     \vspace{0.8cm}
+     \mbox{КУРС МАТЕМАТИЧЕСКОГО И КОМПЬЮТЕРНОГО}         \\
+     \mbox{МОДЕЛИРОВАНИЯ}
+     }
+
+     \vspace{16.0cm}
+    % Калининград, \YEAR \\
+
+ %%}
+ \vspace{0.61cm}
+ \large{$\copyright$ В.\,Зенкин. Калининград, \YEAR}\\
+ \vspace{0.2cm}
+% \small{Typeset by \LaTeX \, (MiK\TeX \; 2.7)}
+ %$\gr{qwertyuiopasdfghjklzxcvbnm}$
+\end{center}
+\end{titlepage}
+%% конец титула; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \newpage
+\thispagestyle{empty}  %% убрал № страницы
+ {\phantom{I}}
+ \vspace{19cm}
+ %%-- логотип -------------------------------------------------------------
+ \begin{center}
+ \includegraphics[height = 0.06\textheight, width = 0.08\textwidth]
+ {pict/VZLOGO.pdf}\\
+ \vspace{0.4cm}
+ {\small $\copyright$ В.~Зенкин. Калининград, \YEAR}\\
+ {\small Вёрстка текста и иллюстрации автора.}
+ \end{center}
+ %%------------------------------------------------------------------------
+ \newpage
+ \thispagestyle{empty}  %% убрал № страницы
+ \begin{tableofcontents}
+ \end{tableofcontents}
+ \newpage
+  \thispagestyle{empty}  %% убрал № страницы
+ \input INTRO                       %% введение
+ \newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}             %% убрал № страницы;
+\chapter  [МАТЕМАТИЧЕСКИЕ МОДЕЛИ]
+           {\textsc{МАТЕМАТИЧЕСКИЕ МОДЕЛИ}}       \label{chapt_MATH_MODELS}
+\section [\textbf{\textsc{математическое моделирование}}]
+          {\textsc{Математическое моделирование}} \label{_MATHMODELLING}
+\input build_models
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}             %% убрал № страницы;
+\chapter  [ПРОГРАММНАЯ РЕАЛИЗАЦИЯ МАТЕМАТИЧЕСКИХ МОДЕЛЕЙ]
+           {\textsc{ПРОГРАММНАЯ РЕАЛИЗАЦИЯ \\
+                    МАТЕМАТИЧЕСКИХ МОДЕЛЕЙ}}              \label{chapt_PROG_MODELS}
+\section [\textbf{\textsc{Проектирование структуры программы}}]
+          {\textsc{Проектирование структуры программы}}   \label{_PROJECT_MATHMODELLING}
+\input prog_models
+\section [\textbf{\textsc{Оптимизация и отладка программы}}]
+          {\textsc{Оптимизация и отладка программы}}      \label{_DEBUG_MATHMODELLING}
+\input prog_debug
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \thispagestyle{empty}             %% убрал № страницы;
+ %{\phantom{I}} \vspace{2.5 cm}     %% спуск полосы;
+ \chapter  [ПРИМЕРЫ МАТЕМАТИЧЕСКИХ МОДЕЛЕЙ]
+           {\textsc{ПРИМЕРЫ МАТЕМАТИЧЕСКИХ\\ МОДЕЛЕЙ}}    \label{chapt_MODELS}
+  \vspace  {0.8 cm}
+ %-----------------------------------------------------------------------
+ \section [\textbf{\textsc{физика}}]
+          {\textsc{Физика}}                             \label{_PHYSMODELS}
+ \input phys_models
+ \section [\textbf{\textsc{биология и физиология}}]
+          {\textsc{Биология и физиология}}              \label{_BIOMODELS}
+ \input bio_models
+ \section [\textbf{\textsc{военное дело}}]
+         {\textsc{Военное дело}}                        \label{_WARCRAFT}
+ \input war_models
+ \section [\textbf{\textsc{социология и политология}}]
+          {\textsc{Социология и политология}}           \label{_SOCPOLIT}
+ \input soc_polit_model
+ \section [\textbf{\textsc{информатика}}]
+          {\textsc{Информатика}}                        \label{_INFORMATIK}
+ \input informatik_model
+ \newpage
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \thispagestyle{empty}             %% убрал № страницы;
+ \chapter  [РЕШЕНИЕ ВОПРОСОВ]
+           {\textsc{РЕШЕНИЕ ВОПРОСОВ}}     \label{chapt_RESHENIE}
+ \section[\textbf{\textsc{физика}}]
+           {\textsc{Физика}}               \label{reshenie_PHYSMODELS}
+ \input solver_phys
+ \section[\textbf{\textsc{биология и физиология}}]
+          {\textsc{Биология и физиология}} \label{reshenie_BIOMODELS}
+ \input solver_bio
+ \section[\textbf{\textsc{военное дело}}]
+          {\textsc{Военное дело}}           \label{reshenie_WARMODELS}
+ \input solver_war
+ \section[\textbf{\textsc{социология и политология}}]
+         {\textsc{Социология и политология}}\label{reshenie_SOCPOLITMODELS}
+ \input solver_soc_polit
+ \section[\textbf{\textsc{листинги}}]
+         {\textsc{Листинги}}                \label{prog_listings}
+ \input   app_listings
+ \newpage
+ %% APPENDIX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}             %% убрал № страницы;
+ \chapter[ПРИЛОЖЕНИЯ]
+         {\textsc{ПРИЛОЖЕНИЯ}}
+ \appendix \label{__appendix__}
+ \section [Программное обеспечение]
+          {Программное обеспечение}              \label{_app_soft_}
+ \input   app_soft
+ \section [Решения и исследования дифференциальных уравнений]
+          {Решения и исследования дифференциальных уравнений}  \label{_app_differential_}
+ \input   app_differential
+ \section [Решения разностных уравнений]
+          {Решения разностных уравнений}         \label{_app_difference_}
+ \input   app_difference
+ \section [Решения матричных игр]
+          {Решения матричных игр}                \label{_app_games_}
+ \input   app_games
+ \section [Симплекс-метод]
+          {Симплекс-метод}                       \label{_app_simplex_}
+ \input   app_simplex
+ \section [Аппроксимация табличной функции]
+          {Аппроксимация табличной функции}      \label{_app_approx_OLS}
+ \input   app_OLS
+ \section [Формальные языки и грамматики]
+          {Формальные языки и грамматики}        \label{_app_grammatika}
+ \input   app_grammatika
+ \section [Конечные автоматы]
+          {Конечные автоматы}                    \label{_app_app_finite_automaton}
+ \input   app_finite_automaton
+ \newpage
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \thispagestyle{empty}  %% убрал № страницы
+ \input _literat
+ \end{document}

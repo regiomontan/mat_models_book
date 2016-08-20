@@ -1,0 +1,158 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%==========================================%%
+%%=  В. И. Зенкин Стилевой файл для        =%%
+%%=  обложки                               =%%
+%%=  Математическое моделирование          =%%
+%%==========================================%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ %%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ %% для генерации PDF-документа, ссылки будут видны только после конвертации
+ %% по цепочке dvi -> ps -> pdf
+ \newif\ifPDFFLAG   %% флаг для PDF:
+ %\PDFFLAGtrue       %% взведён
+ %\PDFFLAGfalse      %% сброшен
+ %%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ \ProvidesPackage{vz_cover}
+
+\usepackage[a4paper,vmargin={5mm,7mm},hmargin={5mm,7mm}]{geometry}
+
+
+ %\usepackage[T2A]{fontenc} %% Заказ шрифтов Лапко-Ходулева
+% \usepackage{cmap}                     %% Поддержка поиска русских слов в PDF(pdflatex)
+ %\usepackage{indentfirst}              %% Красная строка в первом абзаце
+% \usepackage{autopagewidth}            %% для шрифтов
+% \usepackage{extsizes}                 %% 14-го кегля;
+ \usepackage[cp1251]{inputenc}         %% - для WiN;
+ \usepackage[english,russian]{babel}   %% Babel;
+ \usepackage[T2A]{fontenc}
+ %\usepackage{AcademyC}
+ \usepackage{pscyr}
+ %\usepackage{SclBookC}
+ %\usepackage{LiteraturnayaC}          %% Шрифты пакета FontsC:
+ %\usepackage{BaskerC}                  %% векторные шрифты,
+ %\usepackage{BalticaC}                 %% нужны для нормальных
+ %\usepackage{OffSerifC}                %% .pdf и .ps файлов;
+ %\usepackage{SclBookC}                 %%
+ %\usepackage{AvantC}                   %%
+ %\usepackage{PetersburgC}              %%
+ %\usepackage[active]{srcltx}           %% функция "Inverse Search";
+ \usepackage[dvips]{graphicx}          %%
+ %\usepackage{wrapfig}                  %% рисунки "в оборку";
+ %\usepackage{amssymb}                  %% ams-символы;
+ %\usepackage{amsmath}
+ \usepackage{fancyhdr}                 %% колонтитулы;
+ %\usepackage{verbatim}
+ %\usepackage{listings}
+ %\usepackage{scalefnt}                 %% масштабирование шрифтов
+ %\usepackage{fancyvrb}
+ %\frenchspacing
+ %\DeclareMathSizes{10}{11  }{8}{7}       %%увеличил мат. шрифты
+% \DeclareMathSizes{11}{12  }{8}{7}       %%увеличил мат. шрифты
+% \DeclareMathSizes{12}{12.4}{9}{8}       %%увеличил мат. шрифты
+
+
+\usepackage{fancybox}
+
+ \renewcommand{\rmdefault}{fac}       %%{fac} -academy
+
+ \renewcommand\normalsize{\fontsize{15}{16.0pt}\selectfont}   %%увеличил основной фонт
+% \renewcommand\footnotesize{\fontsize{14}{15.0pt}\selectfont} %%увеличил  фонт сносок
+
+
+
+
+
+ %%================================================================
+ %%  Реализация функции Inverse Search для оболочки WinEdt
+ %%  Файл Srcltx.sty нужно скопировать в каталог
+ %% \localtexmf\tex\latex ( если каталога нет - создать )
+ %%================================================================
+ %\usepackage[active]{srcltx}
+ %%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ \usepackage{color}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%  если нужно собрать книгу в PDF формате со ссылками (ДЛЯ ЧТЕНИЯ С ЭКРАНА)
+ %%%%  параметры PDF файла
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ %\DeclareSymbolFont{greek}{U}{psy}{m}{n}   % для греческого
+% \DeclareSymbolFontAlphabet{\gr}{greek}    % шрифта;
+
+ \ifPDFFLAG
+ \definecolor{darkblue}{rgb}{0.15,0.10,0.55}
+ \usepackage[ bookmarks,  breaklinks,
+              colorlinks, urlcolor = darkblue,
+              dvips, unicode, pdfstartview=FitH] {hyperref}
+ \definecolor{darkgreen}{rgb}{0.35,0.2,0.15}
+ \hypersetup
+ {
+ pdftitle    = {Мат. и комп. моделирование},
+ pdfauthor   = {В.Зенкин, 2015},
+ pdfsubject  = {математические модели},
+ pdfkeywords = {задачи математического моделирования},
+ linkcolor   = darkgreen,     %% цвет текста ссылок на мишени внутри документа;
+ pagecolor   = darkgreen,     %% цвет текста ссылок на страницу;
+ citecolor   = darkgreen,     %% цвет библиографических ссылок (команда \cite);
+ }
+
+ %\definecolor{dred}{rgb}{0.59, 0.097, 0.097} %% тёмно-красный
+
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%  если нужно собирать книгу в PDF формате (ДЛЯ ПЕЧАТИ)
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \else
+ %\usepackage[draft=true]{hyperref} %% выключ. всех гипертекстовых опций;
+ \fi
+ %%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ %\textwidth      = 155mm   %% шиpина текста;
+% \textheight     = 250mm   %% высота текста на стpанице;
+% \oddsidemargin  = 4.6mm   %% левое поле для нечетной стpаницы;
+% \evensidemargin = 4.6mm   %% левое поле для четной стpаницы;
+% \topmargin      =-20.4mm  %% веpхнее поле;
+% \headheight     = 12mm    %% место для колонтитула;
+% \headsep        = 8mm     %% отступ после колонтитула;
+% \righthyphenmin = 2       %% можно переносить 2 буквы;
+% \tolerance      = 500     %% допустимая пазреженность строки;
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%% колонтитулы - пакет fancyhdr %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \pagestyle{fancy}
+ %% этим мы убеждаемся, что заголовки глав и
+ %% разделов используют нижний регистр.
+ %\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+% \renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+% \fancyhf{}  %% убираем текущие установки для колонтитулов
+% \fancyhead[LE,RO] {\thepage}
+% \fancyhead[LO]    {\rightmark}
+% \fancyhead[RE]    {\leftmark}
+% \renewcommand     {\headrulewidth}{0.5pt}
+% \renewcommand     {\footrulewidth}{0pt}
+% \addtolength      {\headheight}{0.5pt} %% оставляем место для линейки
+ \fancypagestyle   {plain}
+   {%
+   \fancyhead{} % на обычных страницах убираем колонтитулы
+   \renewcommand{\headrulewidth}{0pt}   %% и линейку
+   }
+ %%%%%%%%% символы  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \newcommand{\YEAR}         {2015}                             %% текущий год
+ %\newcommand{\const}        {\mathop{\mathrm{const}}\nolimits} %% константа
+% \newcommand{\define}       {\mathop{\mathrm{def}}\nolimits}   %% "определяю"
+% \newcommand{\txtaccent}[1] {$\acute{\textrm{#1}}$}            %% ударение в тексте
+% \newcommand{\divirg}       {\mathop{\mathrm{div}}\nolimits}   %% "div"
+% \newcommand{\gradient}     {\mathop{\mathrm{grad}}\nolimits}  %% "grad"
+% \newcommand{\delitca}      {\,\vdots\,}                       %% знак "делится"
+% \newcommand{\proof}        {\textbf{Доказательство. }}
+% \newcommand{\prooff}[1]    {\textbf{Доказательство {#1}. }}
+% \newcommand{\proofend}     {$\blacksquare$}
+% \newcommand{\HOD}[1]       {{\textup{НОД}}{#1}}
+
+ %\newcommand{\max}           {\mathop{\mathrm{max}}\nolimits}
+ %\newcommand{\ch}           {\mathop{\mathrm{ch}}\nolimits}    %% ch
+ %\newcommand{\sgn} {\mathop{\mathrm{sgn}}\nolimits} %% функция signum
+ %\newcommand{\PR}  { {\Large$\triangleright$} }     %% начало доказательства
+ %\newcommand{\RP}  { {\Large$\triangleleft$} }      %% конец доказательства
+
+
+\definecolor{cover_color}{rgb}{0.89, 0.92, 0.89} %%

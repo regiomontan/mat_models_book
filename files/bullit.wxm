@@ -1,0 +1,33 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+Измерение скорости пули при помощи баллистического маятника
+========================================================================
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+m   : 0.003   $          /* масса пули (кг)                   */
+M   : 16.0   $           /* масса цилиндра маятника (кг)      */ 
+l   : 1       $          /* длина стержня маятника (м)        */  
+g   : 9.8     $          /* ускор. свободного падения (м/с^2) */ 
+v   : 900     $          /* скорость пули                     */ 
+
+alpha( m, M, l, v ) := acos( 1.0 - m^2*v^2 / ( 2*(m + M)^2 *g*l ) )$
+
+print( " alpha = ", num( alpha( m, M, l, v ) * 180.0 / 3.14 ), " градусов" )$
+
+cos(3.14 / 60 ) $
+
+c : cos( 3.1415 / 60) $    /* cos( 3 градусов )*/
+
+
+
+
+v( m, M, l, alfa ) := (m + M) / m * sqrt( 2*g*l*( 1.0 - c ) ) $
+
+print( " v = ", num( v( m, M, l, alfa ) ), " м/с" )$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,127 @@
+
+ \newif\ifflagNOBOOK   %% флаг "не собирать книгу":
+ %\flagNOBOOKtrue       %% взведён
+ \flagNOBOOKfalse      %% сброшен
+
+ \ifflagNOBOOK
+ \documentclass[14pt,a4paper]{extbook}
+ \usepackage{vz}
+ \begin{document}
+ \fi
+
+ \begin{flushright}
+                 \parbox{0.68\textwidth}
+                 {
+                 \emph{Болтовня ничего не стоит. Покажите мне код.
+                 }}
+                 \end{flushright}
+                 \begin{flushright}
+                 \emph{Линус Торвальдс}
+\end{flushright}
+
+
+  Для  сокращения размера программного кода почти не применялась оптимизация.
+  Эффективность всюду принесена в жертву читаемости. Все
+  необходимые пояснения содержатся в комментариях.
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \lstinputlisting{listings/my_prog_logo1.txt}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+   \vspace{1.0em}
+
+  \subsection{Реалистичное освещение. Рейтрессинг} \label{listings_raytracing}
+  \vspace{0.5em}
+
+
+ \subsubsection{Базовый класс Tvector (вектор) и векторные операции} \label{base_class_vector}
+
+ \lstinputlisting{listings/render/vectorUnit.pas}
+
+ \subsubsection {Класс Tray (луч)} \label{ray_class_listing}
+
+ \lstinputlisting{listings/render/rayUnit.pas}
+
+ \subsubsection {Операции с цветом} \label{color_class_listing}
+
+ \lstinputlisting{listings/render/colorUnit.pas}
+
+ \subsubsection {Базовый класс Tfigure} \label{Tfigure_class_listing}
+
+ \lstinputlisting{listings/render/figureUnit.pas}
+
+ \subsubsection {Класс Tsphere (сфера)} \label{Tsphere_class_listing}
+
+ \lstinputlisting{listings/render/sphereUnit.pas}
+
+ \subsubsection {Трассировщик} \label{trace_listing}
+
+ \lstinputlisting{listings/render/traceUnit.pas}
+
+ \subsubsection {Головной модуль} \label{main_listing2}
+
+ \lstinputlisting{listings/render/mainUnit.pas}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \subsection{Цикады и простые числа} \label{listings_bioprimes}
+  \vspace{0.5em}
+
+ \subsubsection{Базовый класс <<Особь>>} \label{listing_bioprimes_mainclass}
+
+ \lstinputlisting[language=C++]{listings/bioprimes/thing.h}
+
+ \lstinputlisting[language=C++]{listings/bioprimes/thing.cpp}
+
+ \subsubsection{Класс <<Хищник>>} \label{listing_bioprimes_predator}
+
+ \lstinputlisting[language=C++]{listings/bioprimes/predator.h}
+
+ \lstinputlisting[language=C++]{listings/bioprimes/predator.cpp}
+
+ \subsubsection{Класс <<Жертва>>} \label{listing_bioprimes_prey}
+
+ \lstinputlisting[language=C++]{listings/bioprimes/prey.h}
+
+ \lstinputlisting[language=C++]{listings/bioprimes/prey.cpp}
+
+\subsubsection{Головной файл} \label{listing_bioprimes_main}
+
+\lstinputlisting[language=C++]{listings/bioprimes/bioprm_main.cpp}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \subsection{ИС-2 против PzVI Tiger} \label{listings_war_tanks}
+\lstinputlisting[language=Maxima]{listings/war_models/ODE_ISvsPz4.txt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Tранслятор L2eps c L-языка на PS}    \label{listings_transl}
+\subsubsection[L2eps.y (грамматика и действия)]
+            {L2eps.y (грамматика и действия)}    \label{listing_L2eps}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \lstinputlisting[language=Bison]{listings/lsystem/L2eps.y}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \subsubsection[Lsyst.h (L-системы, заголовки функций)]
+            {Lsyst.h (L-системы, заголовки функций)} \label{listing_Lsyst_h}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \lstinputlisting[language=Bison]{listings/lsystem/Lsyst.h}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \subsubsection[Lsyst.c (L-системы, функции)]
+            {Lsyst.c (L-системы, функции)}            \label{listing_Lsyst_c}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \lstinputlisting[language=Bison]{listings/lsystem/Lsyst.c}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \subsubsection[EPS.h (EPS-формат, заголовки функций)]
+             {EPS.h (EPS-формат, заголовки функций)} \label{listing_EPS_h}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \lstinputlisting[language=Bison]{listings/lsystem/EPS.h}
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \subsection{Простейший клеточный автомат} \label{listings_cell_auto}
+  \vspace{0.5em}
+ %\subsubsection{Головной файл} \label{cell_main}
+ \lstinputlisting[language=C++]{listings/cell_auto/main.cpp}
+ \subsubsection{Класс Клеточный автомат} \label{listings_cell_h}
+ \lstinputlisting[language=C++]{listings/cell_auto/cell_bits.h}
+ \lstinputlisting[language=C++]{listings/cell_auto/cell_bits.cpp}
+
+ \ifflagNOBOOK
+ \end{document}
+ \fi

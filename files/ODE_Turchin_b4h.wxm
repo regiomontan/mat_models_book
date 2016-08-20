@@ -1,0 +1,75 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+Динамика государства (Турчин) b > h/2 неустойчивость
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+c0  : 1.0   $
+a   : 0.105  /*0.104*/ $
+h   : 1.0   $
+r0  : 0.1   $
+b   : 0.99  $
+
+A0  : 0.15  $
+S0  : 0.8   $
+t0  : 0.0   $
+tN  : 150   $
+tau : 3.0   /*шаг интегрирования*/ $
+
+AA( A, S )  := if A < 0.0 then A : 0.0 
+               else c0*A*S*( 1.0 - A/h ) - a       /* размер территории */ $
+SS( A, S )  := if A < 0.0 then A : 0.0
+               else r0*( 1.0 - A/2/b)*S*( 1.0 - S )   /* асабия */ $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+решение методом Рунге-Кутты
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+load( "dynamics" )$
+sys: rk( [ AA( A, S ), SS( A, S ) ], 
+         [ A, S ], [ A0, S0 ], 
+         [ t , t0, tN, tau ] 
+       ) $
+
+tA  : makelist( [ sys[i][1] , sys[i][2] ],  i, 1, (tN - t0)/tau + 1 )   $ 
+tS  : makelist( [ sys[i][1] , sys[i][3] ],  i, 1, (tN - t0)/tau + 1 )   $ 
+
+Mt  : makelist( sys[i][1],  i, 1, (tN - t0)/tau + 1 )   $
+MA  : makelist( sys[i][2],  i, 1, (tN - t0)/tau + 1 )   $
+MS  : makelist( sys[i][3],  i, 1, (tN - t0)/tau + 1 )   $
+
+load( "draw" )$
+
+draw2d(    terminal       = eps,
+            points_joined  = true, 
+            line_width     = 1, 
+            color          = dark_green,
+            grid           = true, 
+            point_type     = 13, 
+            point_size     = 1,
+            key            = "A",
+            points( tA ),
+            color          = dark_red,
+            key            = "S",
+            points( tS )           
+       ) $
+
+/** фазовая xy *******************************/
+'draw2d(    /*terminal       = eps,*/
+            points_joined  = true, 
+            line_width     = 1, 
+            color          = dark_magenta,
+            grid           = true, 
+            point_type     = 0, 
+            point_size     = 2,
+            key            = "AS",
+            points( MA, MS )          
+       ) $
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

@@ -1,0 +1,59 @@
+ \newif\ifflagNOBOOK   %% флаг "не собирать книгу":
+ %\flagNOBOOKtrue       %% взведён
+ \flagNOBOOKfalse      %% сброшен
+
+ \ifflagNOBOOK
+ \documentclass[12pt,a4paper]{book}
+ \usepackage{vz}
+ \begin{document}
+ \thispagestyle{empty}
+ {\Large\bf{Приложение. Программное обеспечение}}
+ \fi
+
+ Для программной реализации математических моделей "--- как учебных проектов, так и с
+ учетом их возможного последующего развития, "--- необходимы
+ следующие требования к программному обеспечению:
+  \begin{itemize}
+   \item["---]бесплатность (по~крайней мере, для некоммерческого использования);
+   \item["---]открытые исходные коды.
+  \end{itemize}
+ Дополнительно, желательна кроссплатформенность.
+ Открытые исходные коды дают возможность проверить корректность и детально контролировать
+ работу любого алгоритма, и, если нужно, изменить его код.
+
+ Для решения задач компьютерного моделирования данного сборника можно \emph{рекомендовать}
+ следующее программное обеспечение:
+ \begin{itemize}
+   \item Компиляторы, интегрированные среды разработки (IDE "--- Integrated Development
+         Environment):
+         \begin{itemize}
+           \item для Linux: C++ или любой другой компилятор из пакета GNU Compiler Collection
+                 (gcc.gnu.org);
+                 для Windows: MinGW (Minimalist GNU for Windows,
+                 mingw.org) c IDE Dev-C++ (bloodshed.net)
+                 или IDE Code::Blocks (codeblocks.org), wxDev-C++ (wxdsgn.sourceforge.net);
+           \item Free Pascal Compiler c IDE Lazarus (lazarus.freepascal.org) "---
+                 свободный аналог проприетарной Delphi.
+         \end{itemize}
+   \item Cистема компьютерной алгебры Maxima (maxima.sourceforge.net). Позволяет проводить
+         аналитические и численные вычисления, строить графики. По набору возможностей система
+         близка к таким коммерческим системам как Maple и Mathematica.
+   \item Gnuplot (www.gnuplot.info). Программа для создания графиков, может работать
+         интерактивно и выполнять скрипты, читаемые из файлов. Позволяет сохранять графики во
+         множестве графических форматов, в том числе в векторных, EPS и SVG.
+   \item Для вёрстки математических текстов можно использовать:
+         \begin{itemize}
+           \item текстовый процессор \LaTeX. Для платформы Windows рекомендуется дистрибутив
+           {MiK\TeX} (miktex.org) с IDE WinShell (winshell.org) или Led (latexeditor.org).
+                 Многие дистрибутивы операционной системы Linux изначально включают пакет {\LaTeX}
+                 с IDE и различными редакторами .
+           \item пакет OpenOffice (openoffice.org/ru) "--- бесплатный аналог коммерческого
+                 Microsoft Office.
+         \end{itemize}
+         Использование {\LaTeX} позволяет добиться наиболее качественной вёрстки математических
+         документов любой сложности.
+ \end{itemize}
+
+ \ifflagNOBOOK
+ \end{document}
+ \fi

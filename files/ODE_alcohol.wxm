@@ -1,0 +1,93 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+МОДЕЛЬ АЛКОГОЛИЗМА
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+u  : 0.75  $
+c  : 0.96  $
+k  : 0.075 $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+правая часть дифф. уравнения:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+f( x ) :=  u - c*x / ( k + x ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+начальные условия:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+t0 : 0.0   $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x0 : 2.0  $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tN : 16.0   $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+шаг интегрирования
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+tau : 0.1$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+метод Рунге-Кутты
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+load( "dynamics" )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sys: rk( [ f(x)], [ x ], [ x0], [ t , t0, tN, tau ] ) $ 
+tx   : makelist( [ sys[i][1] , sys[i][2] ],  i, 1, (tN - t0)/tau + 1 )   $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+beta : 0.15  $ /* константа скорости отрезвления промиле час */
+w(t) := -beta*t + x0$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load( "draw" )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw2d( terminal       = eps,
+        points_joined = true, 
+        line_width    = 1, 
+        color         = dark-green,
+        grid          = true,  
+        point_type    = 0 /* plus */, 
+        point_size    = 2,
+        key           = "x ", 
+        points( tx ),
+        color         = dark_red,
+        key           = "w",
+        explicit( w(t), t, t0, tN ) 
+      ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Интегрирование 
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+integrate( 1/ ( u1 - c1*x / ( k1 + x ) ), x ) ;
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

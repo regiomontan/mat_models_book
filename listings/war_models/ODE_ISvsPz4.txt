@@ -1,0 +1,38 @@
+ -->  eq1 : 'diff( r(t), t ) = -9*0.2*b(t) $  
+ -->  eq2 : 'diff( b(t), t ) = -3*0.9*r(t) $  
+ /*   начальные условия:                                   */ 
+ -->  t0 : 0  $  
+ -->  r0 : 20 $  
+ -->  b0 : 20 $  
+ -->  tN : 1  $  
+ -->  atvalue( r(t), t = t0, r0 ) /* r(t0) = r0 */ $  
+ -->  atvalue( b(t), t = t0, b0 ) /* b(t0) = b0 */ $  
+ /*    решение системы дифф. уравнений:                    */ 
+ -->  d : desolve( [ eq1, eq2 ], [ r(t), b(t) ] );  
+ -->  rr : rhs( d[1] ) $  
+ -->  bb : rhs( d[2] ) $  
+ /*    Результат боя - кто и когда победил. Синие          */ 
+ /*    уничтожены? Решение ур. b(t) = 0 методом Ньютона:   */
+ -->  tp : - 100      /* момент победы или поражения */ $ 
+      load( "mnewton" )$   
+ -->  newton_b : mnewton( [bb = 0], [t], [t0] ) $   
+ -->  if newton_b # []  
+      then block( tp : rhs( newton_b[1][1] ),  
+                  print("Синие уничтожены через ",tp," мин."), 
+                  print("У Красных осталось ",  
+                  round( ev( rr, t = tp, float )),"танков." )  
+                );   
+ /*    Красные уничтожены? Решение b(t) = 0 мет. Ньютона:  */   
+ -->  newton_r : mnewton( [rr = 0], [t], [t0] ) $ 
+      if newton_r # []  
+      then block( tp : rhs( newton_r[1][1] ),  
+                  print("Красные уничтожены через ",tp,"мин."), 
+                  print("У Синих осталось ",  
+                  round(ev( bb, t = tp, float )),"танков.")  
+                 );   
+ -->  B(t) := if t <= tp then bb else ev( bb, t = tp ) $   
+ -->  R(t) := if t <= tp then rr else ev( rr, t = tp ) $   
+ -->  plot2d( [ R(t), B(t) ], [ t, t0, tN ],  
+              [gnuplot_preamble, "set grid;"],  
+              [color, red, blue, gray],  
+              [xlabel, "t"], [legend, "r(t)", "b(t)"] )$   

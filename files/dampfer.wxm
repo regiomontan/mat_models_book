@@ -1,0 +1,34 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+Виброгаситель
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+m1    : 100.0 $
+m2    : 10.0  $
+k     : 0.4   $
+A     : 5.0   $
+omega : sqrt( k / m2 )*(1 + 0.00) $
+
+tN    : 110.0  $   
+
+x2(t) := k*A / omega^2 / ( m1*m2*omega^2 - k*(m1 + m2) )*sin( omega*t ) $
+x1(t) := -m2 / m1 * x2(t) - A / m1 / omega^2 * sin( omega*t ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw2d( terminal       = eps, 
+        grid       = true, 
+        key        = "x_1",
+        color      = dark_blue,
+        explicit( x1(t), t, 0.0, tN ),
+        color      = dark_green,
+        key        = "x_2", 
+        explicit( x2(t), t, 0.0, tN )
+       ) $
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

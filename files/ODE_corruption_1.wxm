@@ -1,0 +1,118 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+модель коррупции (подавление) 
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+/*FPPREC : 256*/
+
+alpha : 0.5  $
+beta  : 0.1  $
+gamma : 0.01  $
+delta : 0.05  $
+epsil : 0.6  $
+
+dzeta : 0.001  $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+XX(x,y,z) := alpha*x / (beta + x) - gamma*x*y*z  /* попул€рность */ $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+YY(x,y,z) := delta*x*y - gamma*y*z               /* вз€тки       */ $
+ZZ(x,y,z) := epsil*gamma*y*z - dzeta*z           /* разоблачение */ $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+начальные услови€:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+t0 : 0.0    $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+x0 : 0.1    $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+y0 : 0.9  $
+z0 : 0.1    $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tN : 700.0  $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+шаг интегрировани€
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+tau : 0.1 $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+решение методом –унге- утты
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+load( "dynamics" )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sys: rk( [ XX( x,y,z ), YY( x,y,z ), ZZ( x,y,z ) ], 
+         [ x,y,z ], [ x0, y0, z0  ], 
+         [ t , t0, tN, tau ] 
+       ) $ 
+tx   : makelist( [ sys[i][1] , sys[i][2] ],  i, 1, (tN - t0)/tau + 1 )   $
+ty   : makelist( [ sys[i][1] , sys[i][3] ],  i, 1, (tN - t0)/tau + 1 )   $
+tz   : makelist( [ sys[i][1] , sys[i][4] ],  i, 1, (tN - t0)/tau + 1 )   $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load( "draw" )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw2d(    /*terminal       = eps,*/
+            points_joined  = true, 
+            line_width     = 1, 
+            color          = dark_green,
+            grid           = true, 
+            point_type     = 0, 
+            point_size     = 2,
+            key            = "x",
+            points( tx ),
+            color          = dark_red,
+            key            = "y",
+            points( ty ),
+            color          = black,
+            key            = "z",
+            points( tz )
+       ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

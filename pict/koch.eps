@@ -1,0 +1,546 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 6 7 678 85
+%%Creator: Expression
+%%Title: koch.xpr
+%%Pages: 1
+%%DocumentSuppliedResources: procset LCLPSProc
+%%DocumentSuppliedResources: font LCL-transp
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset LCLPSProc
+/LCLProcSet 53 dict def
+LCLProcSet begin
+/MskDct 5 16 add dict def % a separate dictionary for Transparency ..
+MskDct begin
+ /dw 8 def   % character width in device pixels
+ /dh 8 def   % character height in device pixels
+ /dx 0 def   % phase x offset
+ /dy 0 def   % phase y offset
+ /tr 0 def   % the character code for the current transparency.
+end %MskDct
+/max {2 copy gt{pop}{exch pop}ifelse} bind def
+/min {2 copy lt{pop}{exch pop}ifelse} bind def
+/lC {setlinecap} bind def
+/lJ {setlinejoin} bind def
+/Jm {0 lJ}bind def
+/Jr {1 lJ}bind def
+/Jb {2 lJ}bind def
+/Cb {0 lC}bind def
+/Cr {1 lC}bind def
+/Cs {2 lC}bind def
+/lD {0 setdash} bind def
+/W {setlinewidth} bind def
+/K {currentflat{{clip}stopped currentflat 99 lt and{currentflat 1 add setflatclip}
+{exit}ifelse}bind loop setflat} bind def
+/eK {eoclip} bind def
+/F {fill} bind def
+/eF {eofill} bind def
+/G {gsave} bind def
+/R {grestore} bind def
+/s {save} bind def
+/r {restore} bind def
+/M {moveto} bind def
+/L {lineto} bind def
+/C {curveto} bind def
+/N {newpath} bind def
+/CP {closepath} bind def
+/gC {setgray} bind def
+/rC {setrgbcolor} bind def
+/cC /setcmykcolor where { /setcmykcolor get }
+{{1 sub 3 { 3 index add neg dup 0 lt { pop 0 } if 3 1 roll } repeat
+ setrgbcolor} bind} ifelse def
+/S {stroke} bind def
+/curgrad 1536 string def
+/rdgrd {currentfile curgrad readhexstring pop pop} bind def
+/Tl {translate} bind def
+/Tf {transform} bind def
+/iTf {itransform} bind def
+/cT {concat} bind def
+/id {identmatrix} bind def
+
+% ------------------------------------------------------------
+%                   Look up RGB table
+% ------------------------------------------------------------
+/luRGB     % look up rgb values from the gradient table (a string).
+{
+ 3 dict begin
+ /f exch def
+ /s exch def
+ /idx s length 3 div cvi 1 sub f mul cvi 3 mul def
+ s idx       get 255 div
+ s idx 1 add get 255 div
+ s idx 2 add get 255 div
+ end
+} bind def
+/rect
+{
+ N 3 index 1 index M 2 copy L pop 1 index L L CP
+} bind def
+/xrect
+{
+ 4 dict begin
+  newpath
+  /p2y exch def /p2x exch def
+  /p1y exch def /p1x exch def
+  N
+  p1x p1y M p1x p2y L
+  p2x p2y L p2x p1y L
+  CP
+  p1x p1y M p2x p2y L
+  p1x p2y M p2x p1y L
+  S
+ end
+} def
+/rect2
+{
+ 4 dict begin
+  /h exch def /w exch def
+  /p1y exch def /p1x exch def
+  N
+  p1x p1y M p1x p1y h add L
+  p1x w add p1y h add L p1x w add p1y L
+  CP
+  p1x p1y w h
+ end
+} def
+/Kr /rectclip where {/rectclip get}
+{{rect2 K} bind} ifelse def
+
+% ------------------------------------------------------
+%                      Linear Gradient
+% ------------------------------------------------------
+/lgrd
+{
+ 18 dict begin
+ G
+ /mtx exch def
+ /p2y exch def /p2x exch def
+ /p1y exch def /p1x exch def
+ /b00x p1x def /b00y p1y def
+ /b01x p1x def /b01y p2y def
+ /b11x p2x def /b11y p2y def
+ /b10x p2x def /b10y p1y def
+ b00x b00y mtx itransform /b00y exch def /b00x exch def
+ b01x b01y mtx itransform /b01y exch def /b01x exch def
+ b11x b11y mtx itransform /b11y exch def /b11x exch def
+ b10x b10y mtx itransform /b10y exch def /b10x exch def
+ /xmax b00x b01x b11x b10x max max max def
+ /xmin b00x b01x b11x b10x min min min def
+ /ymax b00y b01y b11y b10y max max max def
+ /ymin b00y b01y b11y b10y min min min def
+ mtx concat
+ xmin 0.1 lt
+ {
+  curgrad 0.0 luRGB rC
+  xmin ymin 0.1 ymax rect F
+ } if
+ mtx 0 get abs mtx 1 get abs max 2 mul 512 min  %  min(max(abs(mtx[0]),abs(mtx[1])),512)
+ dup 0.001 gt
+ {
+  1 exch div dup 0.06 add /stepsize exch def
+  0 xmin max exch 1.0 xmax min 
+  {
+   /x exch def
+   curgrad x luRGB rC
+   N x ymin x stepsize add ymax rect F
+  } for
+ } if
+ xmax 1 gt
+ {
+  curgrad 1.0 luRGB rC
+  1 ymin xmax ymax rect F
+ } if
+ R
+ end
+} bind def
+
+% ----------------------------------------------------------
+%                       Radial Gradient
+% ----------------------------------------------------------
+/rgrd
+{
+ 8 dict begin
+ G
+ /mtx exch def
+ /p2y exch def /p2x exch def
+ /p1y exch def /p1x exch def
+ /r1 exch def /r0 exch def
+ p1x p1y p2x p2y rect 
+ curgrad 1.0 luRGB rC F
+
+ mtx 0 get abs mtx 1 get abs max
+ mtx 2 get abs mtx 3 get abs max max
+ 2 mul
+ 511 min
+ dup 0.001 gt
+ {
+  1 exch div
+  mtx concat
+  neg
+  r1 exch r0
+  {
+   /x exch def
+   curgrad x luRGB rC
+   N 0 0 x 0 360 arc F
+  } for
+ } if
+ R
+ end
+} bind def
+
+% ---------------------------------------------------------
+%              Transparent Linear Gradient
+% ---------------------------------------------------------
+/tlgrd
+{
+ 17 dict begin
+ G
+ /mtx exch def
+ /p2y exch def /p2x exch def
+ /p1y exch def /p1x exch def
+ /b00x p1x def /b00y p1y def
+ /b01x p1x def /b01y p2y def
+ /b11x p2x def /b11y p2y def
+ /b10x p2x def /b10y p1y def
+ b00x b00y mtx itransform /b00y exch def /b00x exch def
+ b01x b01y mtx itransform /b01y exch def /b01x exch def
+ b11x b11y mtx itransform /b11y exch def /b11x exch def
+ b10x b10y mtx itransform /b10y exch def /b10x exch def
+ /xmax b00x b01x b11x b10x max max max def
+ /xmin b00x b01x b11x b10x min min min def
+ /ymax b00y b01y b11y b10y max max max def
+ /ymin b00y b01y b11y b10y min min min def
+ mtx concat
+ xmin 0 lt 
+ {
+  G
+  curgrad 0.0 luRGB rC
+  xmin ymin 0 ymax rect K
+  xmin ymin 0 ymax tf
+  R
+ } if
+ mtx 0 get abs mtx 1 get abs max 512 min
+ dup 1.0 xmax min 0 xmin max sub mul 64 gt { pop 64 } if
+ dup 0.001 gt
+ {
+  1 exch div
+  0 xmin max exch 1.0 xmax min 
+  {
+   /x exch def
+   G
+   curgrad x luRGB rC
+   x ymin x 0.06 add ymax rect K
+   x ymin x 0.06 add ymax tf
+   R
+  } for
+ } if
+ xmax 1 gt
+ {
+  G
+  curgrad 1.0 luRGB rC
+  1 ymin xmax ymax rect K
+  1 ymin xmax ymax tf
+  R
+ } if
+ R
+ end
+} bind def
+
+% ---------------------------------------------------------
+%              Transparent Radial Gradient
+% ---------------------------------------------------------
+/trgrd
+{
+ 8 dict begin
+ G
+ /mtx exch def
+ /p2y exch def /p2x exch def
+ /p1y exch def /p1x exch def
+ /r1 exch def /r0 exch def
+ p1x p1y p2x p2y rect 
+ curgrad 1.0 luRGB rC K
+ p1x p1y p2x p2y tf
+
+ mtx 0 get abs mtx 1 get abs max
+ mtx 2 get abs mtx 3 get abs max max
+ 511 min
+ dup r1 r0 sub mul 32 gt { pop 32 } if
+ dup 0.001 gt
+ {
+  1 exch div
+  mtx concat
+  neg
+  r1 exch r0
+  {
+   /x exch def
+   curgrad x luRGB rC
+   N 0 0 x 0 360 arc K
+   x neg dup x x tf
+  } for
+ } if
+ R
+ end
+} bind def
+
+/settrns {MskDct begin /dy exch def /dx exch def /tr exch def end} bind def
+
+% ------------------------------------------------------
+%                    Transparent Fill
+% ------------------------------------------------------
+/tf
+{
+ MskDct begin
+ /dh 128 def /dw 128 def
+ /p2y exch def /p2x exch def 
+ /p1y exch def /p1x exch def 
+
+ /b00x p1x def /b00y p1y def
+ /b01x p1x def /b01y p2y def
+ /b11x p2x def /b11y p2y def
+ /b10x p2x def /b10y p1y def
+ b00x b00y transform /b00y exch def /b00x exch def
+ b01x b01y transform /b01y exch def /b01x exch def
+ b11x b11y transform /b11y exch def /b11x exch def
+ b10x b10y transform /b10y exch def /b10x exch def
+ /p2x b00x b01x b11x b10x max max max cvi def
+ /p1x b00x b01x b11x b10x min min min cvi def
+ /p2y b00y b01y b11y b10y max max max cvi def
+ /p1y b00y b01y b11y b10y min min min cvi def
+ 
+% /p2x p2x dx sub dw 1 sub add dw div floor dw mul dx add def
+% /p2y p2y dy sub dh 1 sub add dh div floor dh mul dy add def
+% /p1x p1x dx sub dw div floor dw mul dx add def
+% /p1y p1y dy sub dh div floor dh mul dy add def
+ /p1x p1x dw div floor 1 sub dw mul dx add def
+ /p1y p1y dh div floor 1 sub dh mul dy add def
+ /str p2x p1x sub dw div 1 add cvi string def
+ 0 1 str length 1 sub { /x exch def str x tr put } for
+
+ s
+ matrix setmatrix
+ /LCL-Transp findfont 128 scalefont setfont
+
+ p1y dh p2y
+ {
+  p1x exch moveto
+  str show 
+ } for
+
+ end
+ r
+} bind def
+
+/sD  % simple disc : x y c fD
+{
+  5 dict begin
+  /c exch def /y exch def /x exch def
+  x y Tl
+  /r0 10 def
+  /r1 6 def
+
+  c neg 1 add gC
+  0 0 r0 0 360 arc F
+  
+  c gC 0.1 W
+  0 0 r1 0 360 arc S
+  N r0 neg 0 M r0 0 L S
+  N 0 r0 neg M 0 r0 L S
+
+  x neg y neg Tl
+  end
+} bind def
+
+/fD  % fringe disc : x y fD
+{
+  7 dict begin
+  /y exch def /x exch def
+  x y Tl
+
+  /r0 10 def
+  /r1 10 def
+  /r2 4 def
+  /r3 3.9 def
+  /a 5 def
+  
+  0 gC
+  N r1 0 M
+  a 2 div a 2 mul 360                    % for (i=a/2; i<360; i+=a*2)
+  {
+    dup
+    a add exch
+    dup sin exch
+    cos dup r1 mul  2 index r1 mul  L    % lineto(r1*cos, r1*sin)
+    r2 mul exch r2 mul L                 % lineto(r2*cos, r2*sin)
+    dup sin exch
+    cos dup r2 mul  2 index r2 mul  L    % lineto(r2*cos, r2*sin)
+    r1 mul exch r1 mul L                 % lineto(r1*cos, r1*sin)
+  } for
+  CP
+  0 0 r0 0 360 arc
+  eF
+
+  N 0 0 r3 0 360 arc F
+
+  1 gC 0.1 W
+  N 0 0 r3 0 360 arc S
+  N r3 neg 0 M r3 0 L S
+  N 0 r3 neg M 0 r3 L S
+
+  x neg y neg Tl
+  end
+} bind def
+
+/PrtMarks  % Printing Marks : llx lly urx ury PrtMarks
+{
+  7 dict begin
+  /ury exch def /urx exch def
+  /lly exch def /llx exch def
+
+  /len 50 def
+  /gap 5 def
+  /dis 25 def
+
+  G
+  % Crop Mark
+  0 gC 0.1 W
+  N llx gap sub dup len sub lly M lly L S
+  N urx gap add dup len add lly M lly L S
+  N llx gap sub dup len sub ury M ury L S
+  N urx gap add dup len add ury M ury L S
+  N llx lly gap sub dup len sub llx exch M L S
+  N urx lly gap sub dup len sub urx exch M L S
+  N llx ury gap add dup len add llx exch M L S
+  N urx ury gap add dup len add urx exch M L S
+
+  % Fringe Discs
+  llx dis sub lly dis sub fD
+  llx dis sub ury dis add fD
+  urx dis add lly dis sub fD
+  urx dis add ury dis add fD
+
+  % Simple Discs
+  llx dis sub lly dis add 0 sD
+  llx dis sub ury dis sub 0 sD
+  urx dis add lly dis add 0 sD
+  urx dis add ury dis sub 0 sD
+
+  % Simple Discs inverted
+  llx dis add lly dis sub 1 sD
+  llx dis add ury dis add 1 sD
+  urx dis sub lly dis sub 1 sD
+  urx dis sub ury dis add 1 sD
+  R
+
+  end
+} bind def
+
+end %LCLProcSet
+%%EndResource
+
+%%EndProlog
+%%BeginSetup
+LCLProcSet begin MskDct begin /dw 192 def /dh 192 def
+end
+end
+%%EndSetup
+%%Page: 1 1
+%%PageBoundingBox: 6 7 678 85
+LCLProcSet begin s
+N 6.588 8.075 M 27.101 8.075 L 6.588 8.075 M
+27.101 8.075 M 45.050 39.052 L 27.101 8.075 M
+45.050 39.052 M 62.849 8.075 L 45.050 39.052 M
+62.849 8.075 M 83.362 8.075 L 62.849 8.075 M
+0.000 0.000 0.000 rC
+1 W Jr Cr
+S
+N 96.089 8.429 M 110.393 8.429 L 96.089 8.429 M
+110.393 8.429 M 122.764 21.909 L 110.393 8.429 M
+122.764 21.909 M 135.521 8.429 L 122.764 21.909 M
+135.521 8.429 M 149.825 8.429 L 135.521 8.429 M
+149.825 8.429 M 162.196 21.909 L 149.825 8.429 M
+162.196 21.909 M 169.541 44.612 L 162.196 21.909 M
+169.541 44.612 M 183.845 44.612 L 169.541 44.612 M
+183.845 44.612 M 196.602 57.382 L 183.845 44.612 M
+196.602 57.382 M 208.973 44.612 L 196.602 57.382 M
+208.973 44.612 M 223.277 44.612 L 208.973 44.612 M
+223.277 44.612 M 230.622 21.909 L 223.277 44.612 M
+230.622 21.909 M 242.993 8.429 L 230.622 21.909 M
+242.993 8.429 M 257.684 8.429 L 242.993 8.429 M
+257.684 8.429 M 270.054 21.909 L 257.684 8.429 M
+270.054 21.909 M 282.425 8.429 L 270.054 21.909 M
+282.425 8.429 M 296.729 8.429 L 282.425 8.429 M
+0.000 0.000 0.000 rC
+1 W Jr Cr
+S
+N 307.762 11.298 M 314.839 11.298 L 307.762 11.298 M
+314.839 11.298 M 320.500 16.583 L 314.839 11.298 M
+320.500 16.583 M 326.870 11.298 L 320.500 16.583 M
+326.870 11.298 M 333.947 11.298 L 326.870 11.298 M
+333.947 11.298 M 340.316 16.583 L 333.947 11.298 M
+340.316 16.583 M 343.854 25.039 L 340.316 16.583 M
+343.854 25.039 M 350.931 25.039 L 343.854 25.039 M
+350.931 25.039 M 356.593 30.324 L 350.931 25.039 M
+356.593 30.324 M 362.962 25.039 L 356.593 30.324 M
+362.962 25.039 M 370.039 25.039 L 362.962 25.039 M
+370.039 25.039 M 373.577 16.583 L 370.039 25.039 M
+373.577 16.583 M 379.946 11.298 L 373.577 16.583 M
+379.946 11.298 M 387.023 11.298 L 379.946 11.298 M
+387.023 11.298 M 393.392 16.583 L 387.023 11.298 M
+393.392 16.583 M 399.054 11.298 L 393.392 16.583 M
+399.054 11.298 M 406.131 11.298 L 399.054 11.298 M
+406.131 11.298 M 412.500 16.583 L 406.131 11.298 M
+412.500 16.583 M 416.039 25.039 L 412.500 16.583 M
+416.039 25.039 M 423.115 25.039 L 416.039 25.039 M
+423.115 25.039 M 429.485 30.324 L 423.115 25.039 M
+429.485 30.324 M 433.023 39.838 L 429.485 30.324 M
+433.023 39.838 M 433.023 50.408 L 433.023 39.838 M
+433.023 50.408 M 439.392 55.693 L 433.023 50.408 M
+439.392 55.693 M 442.931 65.206 L 439.392 55.693 M
+442.931 65.206 M 450.008 65.206 L 442.931 65.206 M
+450.008 65.206 M 455.669 70.492 L 450.008 65.206 M
+455.669 70.492 M 462.038 65.206 L 455.669 70.492 M
+462.038 65.206 M 469.115 65.206 L 462.038 65.206 M
+469.115 65.206 M 475.484 70.492 L 469.115 65.206 M
+475.484 70.492 M 479.023 78.948 L 475.484 70.492 M
+479.023 78.948 M 486.100 78.948 L 479.023 78.948 M
+486.100 78.948 M 492.469 84.233 L 486.100 78.948 M
+492.469 84.233 M 498.131 78.948 L 492.469 84.233 M
+498.131 78.948 M 505.207 78.948 L 498.131 78.948 M
+505.207 78.948 M 508.746 70.492 L 505.207 78.948 M
+508.746 70.492 M 515.115 65.206 L 508.746 70.492 M
+515.115 65.206 M 522.192 65.206 L 515.115 65.206 M
+522.192 65.206 M 528.561 70.492 L 522.192 65.206 M
+528.561 70.492 M 534.223 65.206 L 528.561 70.492 M
+534.223 65.206 M 541.300 65.206 L 534.223 65.206 M
+541.300 65.206 M 544.838 55.693 L 541.300 65.206 M
+544.838 55.693 M 551.207 50.408 L 544.838 55.693 M
+551.207 50.408 M 551.207 39.838 L 551.207 50.408 M
+551.207 39.838 M 554.746 30.324 L 551.207 39.838 M
+554.746 30.324 M 561.115 25.039 L 554.746 30.324 M
+561.115 25.039 M 568.192 25.039 L 561.115 25.039 M
+568.192 25.039 M 571.730 16.583 L 568.192 25.039 M
+571.730 16.583 M 578.099 11.298 L 571.730 16.583 M
+578.099 11.298 M 585.176 11.298 L 578.099 11.298 M
+585.176 11.298 M 590.838 16.583 L 585.176 11.298 M
+590.838 16.583 M 597.207 11.298 L 590.838 16.583 M
+597.207 11.298 M 604.284 11.298 L 597.207 11.298 M
+604.284 11.298 M 610.653 16.583 L 604.284 11.298 M
+610.653 16.583 M 614.192 25.039 L 610.653 16.583 M
+614.192 25.039 M 621.268 25.039 L 614.192 25.039 M
+621.268 25.039 M 627.638 30.324 L 621.268 25.039 M
+627.638 30.324 M 633.299 25.039 L 627.638 30.324 M
+633.299 25.039 M 640.376 25.039 L 633.299 25.039 M
+640.376 25.039 M 643.914 16.583 L 640.376 25.039 M
+643.914 16.583 M 650.284 11.298 L 643.914 16.583 M
+650.284 11.298 M 657.361 11.298 L 650.284 11.298 M
+657.361 11.298 M 663.730 16.583 L 657.361 11.298 M
+663.730 16.583 M 669.391 11.298 L 663.730 16.583 M
+669.391 11.298 M 677.176 11.298 L 669.391 11.298 M
+0.000 0.000 0.000 rC
+1 W Jr Cr
+S
+r
+%%PageTrailer
+end
+%%Trailer
+%%EOF

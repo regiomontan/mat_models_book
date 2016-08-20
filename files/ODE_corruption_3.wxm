@@ -1,0 +1,101 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: input   start ] */
+/*FPPREC : 256*/
+
+alpha : 0.1    $
+beta  : 0.9    $
+gamma : 0.3    $
+epsil : 0.09  $
+dzeta : 0.02   $
+
+x0 : 0.1    $
+y0 : 0.8   /* уровень*/ $
+z0 : 0.4    $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+XX(x,z) := alpha*x / (beta + x) - gamma*x*y0*z  /* попул€рность */ $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+y(t)  := y0                                     /* вз€тки       */ $
+ZZ(x,z) := epsil*gamma*y0*z - dzeta*x*z         /* разоблачение */ $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+начальные услови€:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+t0 : 0.0    $
+/* [wxMaxima: input   end   ] */
+
+
+
+/* [wxMaxima: input   start ] */
+tN : 50.0  $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+шаг интегрировани€
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+tau : 0.1 $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+решение методом –унге- утты
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+load( "dynamics" )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sys: rk( [ XX( x,z ), ZZ( x,z ) ], 
+         [ x, z ], [ x0, z0  ], 
+         [ t , t0, tN, tau ] 
+       ) $
+tx   : makelist( [ sys[i][1] , sys[i][2] ],  i, 1, (tN - t0)/tau + 1 )   $
+tz   : makelist( [ sys[i][1] , sys[i][3] ],  i, 1, (tN - t0)/tau + 1 )   $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load( "draw" )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw2d(    /*terminal       = eps,*/
+            points_joined  = true, 
+            line_width     = 1, 
+            color          = dark_green,
+            grid           = true, 
+            point_type     = 0, 
+            point_size     = 2,
+            key            = "x",
+            points( tx ),
+            key            = "y",
+            color          = dark_red,
+            explicit( y(t), t, t0, tN ),
+            color          = black,
+            key            = "z",
+            points( tz )
+       ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: hide output   ] */
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

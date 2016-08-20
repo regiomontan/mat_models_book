@@ -1,0 +1,153 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: input   start ] */
+load (lsquares)$
+/** susceptible **************************************/
+S : matrix ( 
+             [ 1.0,  92.753 ], 
+             [ 2.0,  84.517 ], 
+             [ 3.0,  81.883 ],
+             [ 4.0,  81.223 ],
+             [ 5.0,  80.565 ] 
+           ) $
+
+lsq : lsquares_estimates ( 
+                          S, 
+                          [x,y], 
+                          y = A*x^3 + B*x^2 + C*x + D, 
+                          [A, B, C, D] 
+                         ), float $
+a   : rhs( lsq[1][1] ) $ 
+b   : rhs( lsq[1][2] ) $
+c   : rhs( lsq[1][3] ) $
+d   : rhs( lsq[1][4] ) $
+
+print( " a = ", float( a ) ) $
+print( " b = ", float( b ) ) $
+print( " c = ", float( c ) ) $
+print( " d = ", float( d ) ) $
+
+y(x) := a*x^3 + b*x^2 + c*x + d $ 
+
+/* максимальное уклонение в узлах: ******************/
+max_error : max( abs( 1.0 - y(1) / S[1,2] ), 
+                 abs( 1.0 - y(2) / S[2,2] ), 
+                 abs( 1.0 - y(3) / S[3,2] ), 
+                 abs( 1.0 - y(4) / S[4,2] ), 
+                 abs( 1.0 - y(5) / S[5,2] ) 
+                ) $
+print("max error approximation S: ", max_error ) $ 
+
+draw2d( grid       = true, 
+        color      = dark_blue,
+        /*key        = "approximation", */
+        explicit( y(x), x, S[1,1] - 0.5, S[5,1] + 0.5 ),
+        point_size = 1,
+        color      = blue,
+        point_type = filled_circle,
+        /*key        = "sample points", */
+        points( S ) 
+      ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/*** infected *************************************/ 
+I : matrix ( 
+             [ 1.0,  7.213  ], 
+             [ 2.0,  15.410 ], 
+             [ 3.0,  18.033 ],
+             [ 4.0,  18.689 ],
+             [ 5.0,  19.344 ] 
+           ) $
+
+lsq : lsquares_estimates ( 
+                          I, 
+                          [x,y], 
+                          y = A*x^3 + B*x^2 + C*x + D, 
+                          [A, B, C, D] 
+                         ), float $
+a   : rhs( lsq[1][1] ) $ 
+b   : rhs( lsq[1][2] ) $
+c   : rhs( lsq[1][3] ) $
+d   : rhs( lsq[1][4] ) $
+
+print( " a = ", float( a ) ) $
+print( " b = ", float( b ) ) $
+print( " c = ", float( c ) ) $
+print( " d = ", float( d ) ) $
+
+y(x) := a*x^3 + b*x^2 + c*x + d $ 
+
+/* максимальное уклонение в узлах: ******************/
+max_error : max( abs( 1.0 - y(1) / I[1,2] ), 
+                 abs( 1.0 - y(2) / I[2,2] ), 
+                 abs( 1.0 - y(3) / I[3,2] ), 
+                 abs( 1.0 - y(4) / I[4,2] ), 
+                 abs( 1.0 - y(5) / I[5,2] ) 
+                ) $
+print("max error approximation I: ", max_error ) $ 
+
+draw2d( grid       = true, 
+        color      = dark_red,
+        /*key        = "approximation", */
+        explicit( y(x), x, I[1,1] - 0.5, I[5,1] + 0.5 ),
+        point_size = 1,
+        color      = red,
+        point_type = filled_circle,
+        /*key        = "sample points", */
+        points( I ) 
+      ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+/** removed *********************************/
+R : matrix ( 
+             [ 1.0,  0.033 ], 
+             [ 2.0,  0.073 ], 
+             [ 3.0,  0.084 ],
+             [ 4.0,  0.088 ],
+             [ 5.0,  0.091 ] 
+           ) $
+
+lsq : lsquares_estimates ( 
+                          R, 
+                          [x,y], 
+                          y = A*x^3 + B*x^2 + C*x + D, 
+                          [A, B, C, D] 
+                         ), float $
+a   : rhs( lsq[1][1] ) $ 
+b   : rhs( lsq[1][2] ) $
+c   : rhs( lsq[1][3] ) $
+d   : rhs( lsq[1][4] ) $
+
+print( " a = ", float( a ) ) $
+print( " b = ", float( b ) ) $
+print( " c = ", float( c ) ) $
+print( " d = ", float( d ) ) $
+
+y(x) := a*x^3 + b*x^2 + c*x + d $ 
+
+/* максимальное уклонение в узлах: ******************/
+max_error : max( abs( 1.0 - y(1) / R[1,2] ), 
+                 abs( 1.0 - y(2) / R[2,2] ), 
+                 abs( 1.0 - y(3) / R[3,2] ), 
+                 abs( 1.0 - y(4) / R[4,2] ), 
+                 abs( 1.0 - y(5) / R[5,2] ) 
+                ) $ 
+print("max error approximation R: ", max_error ) $ 
+
+draw2d( grid       = true, 
+        color      = dark_green,
+        /*key        = "approximation", */
+        explicit( y(x), x, R[1,1] - 0.5, R[5,1] + 0.5 ),
+        point_size = 1,
+        color      = green,
+        point_type = filled_circle,
+        /*key        = "sample points", */
+        points( R ) 
+      ) $
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

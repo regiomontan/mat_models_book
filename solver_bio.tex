@@ -1,0 +1,131 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Модель эпидемии SIR} \label{SIR_otvet_1}
+
+\textbf{Вопрос \ref{SIR_vopros_2}.} Эпидемия не начнется, если скорость инфицирования не будет
+положительной "--- $\dot{I} \leqslant 0$, то есть в соответствии с \eqref{SIR_model_2},
+$$
+ \alpha S_0 I_0 - \beta I_0 \leqslant 0.
+$$
+Ответ: эпидемия не начнется, если изначально выполняется соотношение
+$$
+  S_0 \leqslant \frac{\beta}{\alpha}.
+$$
+Пример, когда это условие выполняется, показан на рис.~\ref{pict_SIR_2}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{Вопрос \ref{SIR_vopros_1}.} Поделив почленно уравнение \eqref{SIR_model_2}
+на \eqref{SIR_model_1} получим
+$$
+  \frac{\dot{I}}{\dot{S}} = \frac{dI}{dS}= -1 + \frac{\beta}{\alpha} \frac{1}{S},
+$$
+откуда, после интегрирования, имеем
+$$
+ I = -S + \frac{\beta}{\alpha} \ln S + C,
+$$
+константа $C$ определяется из начальных условий \eqref{SIR_model_init}
+$$
+ C = I_0 + S_0 - \frac{\beta}{\alpha} \ln S_0.
+$$
+И, следовательно, так как параметры $\alpha$, $\beta$ в последние соотношения входят в
+одних и тех же степенях, то они одинаково влияют на поведение модели. А поскольку, при прочих
+равных условиях, профилактика всегда лучше лечения, исходя из SIR-модели заключаем, что эпидемию
+действительно предпочтительнее предупредить.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{Вопрос \ref{SIR_vopros_3}.} Аппроксимация табличных данных \ref{table_SIR_data}
+методом наименьших квадратов  с абсолютной погрешностью $\varepsilon \leqslant 0{,}02$ дает
+следующие результаты
+\begin{align*}
+S_{app} &= -0{,}4667 t^3 + 5{,}4236 t^2 - 21{,}1218 t + 108{,}8942, \quad &\varepsilon = 0{,}00173; \\
+I_{app} &=  0{,}4644 t^3 - 5{,}3977 t^2 + 21{,}0219 t - 8{,}8522,   \quad &\varepsilon = 0{,}00779; \\
+R_{app} &=  0{,}0023 t^3 - 0{,}0268 t^2 + 0{,}1028  t - 0{,}0452,   \quad &\varepsilon = 0{,}01633.
+\end{align*}
+%+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ \begin{figure}[h]
+ \begin{center}
+ \includegraphics[height = 0.48\textheight, width = \textwidth]
+  {pict/SIR_kalibr.pdf}
+  \caption{SIR-модель, значения параметров: $\alpha = 0{,}0047$, $\beta = 0{,}0020$, $I_0 = 7{,}2$,
+  $S_0 = 92{,}7$, $R_0 = 0{,}03$. Точками обозначены табличные данные.}
+  \label{pict_SIR_kalibr}
+  \end{center}
+ \end{figure}
+ %+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Коэффициенты $\alpha$, $\beta$ определим как среднее арифметическое величин
+$$
+  \beta =   \frac{ \dot{R}_{app} } { I_{app}         } \approx 0{,}0020, \quad
+  \alpha = -\frac{ \dot{S}_{app} } { S_{app} I_{app} } \approx 0{,}0047
+$$
+
+Поведение модели и сравнение с табличными данными показаны на графиках~\ref{pict_SIR_kalibr}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Модель зомби-эпидемии} \label{SZR_otvet_1}
+
+\textbf{Вопрос \ref{SZR_vopros_1}.} Якобиан матрицы системы уравнений
+\eqref{SZR_model_1}--\eqref{SZR_model_3}
+$$
+\mathbf{J} =
+    \begin{bmatrix}
+     \phantom{( \beta)}  -\alpha Z  &   \phantom{( \beta)}-\alpha S  & \phantom{-}0      \\
+                (\alpha - \beta) Z  &           (\alpha  - \beta) S  & \phantom{-}\gamma \\
+     \phantom{(\alpha - )} \beta Z  & \phantom{(\alpha  - )}\beta S  &           -\gamma
+    \end{bmatrix}
+$$
+Для случая $(0, \overline{Z}, 0)$ (зомби-апокалипсис) имеем
+$$
+\mathbf{J} =
+    \begin{bmatrix}
+     \phantom{( \beta)}  -\alpha \overline{Z}  &  0 & \phantom{-}0      \\
+                (\alpha - \beta) \overline{Z}  &  0 & \phantom{-}\gamma \\
+     \phantom{(\alpha - )} \beta \overline{Z}  &  0 &           -\gamma
+    \end{bmatrix}.
+$$
+Откуда, поскольку характеристическое уравнение
+$$
+ \det\left(\mathbf{J} - \lambda \mathbf{I} \right) =
+ -\Big( \lambda^3 + \left(\alpha \overline{Z} + \gamma\right) \lambda^2 +
+ \alpha \gamma \overline{Z} \lambda \Big),
+$$
+где $\mathbf{I}$ "--- единичная матрица,
+по критерию Гурвица (стр.~\pageref{Gurvitz_criterion})
+имеет один нулевой корень и остальные корни с отрицательными действительными частями,
+ заключаем, что система находится на границе устойчивости.
+
+Для точки $(\overline{S}, 0, 0)$
+$$
+\mathbf{J} =
+    \begin{bmatrix}
+     0  &   \phantom{( \beta)}-\alpha \overline{S}  & \phantom{-}0      \\
+     0  &           (\alpha  - \beta) \overline{S}  & \phantom{-}\gamma \\
+     0  & \phantom{(\alpha  - )}\beta \overline{S}  &           -\gamma
+    \end{bmatrix}
+$$
+и поскольку характеристическое уравнение
+$$
+ \det\left(\mathbf{J} - \lambda \mathbf{I} \right) = -\Big(\lambda^3 -
+ \left( (\alpha - \beta) \overline{S} - \gamma \right) \lambda^2
+ -\beta\gamma \overline{S}\lambda \Big)
+$$
+имеет отрицательный коэффициент, это решение неустойчиво.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Цикады и простые числа} \label{bioprimes_otvet_1}
+ \textbf{Вопрос \ref{bioprimes_vopros_1}.} Язык программирования "--- C++, 
+ см.~стр.~\pageref{listings_bioprimes}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Модель отрезвления} \label{alcohol_otvet_1}
+
+\textbf{Вопрос \ref{alcohol_vopros_1}.} Ответ: приблизительно $250$~миллилитров.
+
+
+
+
+
+
+
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

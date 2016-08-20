@@ -1,0 +1,58 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+Удаление алкоголя из организма
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+beta :  0.15   $
+load (lsquares)$
+/** susceptible **************************************/
+S : matrix ( 
+             [ 1.0,  beta ], 
+             [ 2.0,  beta ], 
+             [ 3.0,  beta ],
+             [ 4.0,  beta ],
+             [ 5.0,  beta ] 
+           ) $
+
+lsq : lsquares_estimates ( 
+                          S, 
+                          [x,y], 
+                          y = C *( K*x ), 
+                          [C, K] 
+                         ), float $
+c   : rhs( lsq[1][1] ) $ 
+k   : rhs( lsq[1][2] ) $
+
+print( " c = ", float( c ) ) $
+print( " k = ", float( k ) ) $
+
+y(x) := c*x /( k + x ) $ 
+
+/* максимальное уклонение в узлах: ******************/
+max_error : max( abs( 1.0 - y(1) / S[1,2] ), 
+                 abs( 1.0 - y(2) / S[2,2] ), 
+                 abs( 1.0 - y(3) / S[3,2] ), 
+                 abs( 1.0 - y(4) / S[4,2] ), 
+                 abs( 1.0 - y(5) / S[5,2] ) 
+                ) $
+print("max error approximation S: ", max_error ) $ 
+
+draw2d( grid       = true, 
+        color      = dark_blue,
+        /*key        = "approximation", */
+        explicit( y(x), x, S[1,1] - 0.5, S[5,1] + 0.5 ),
+        point_size = 1,
+        color      = blue,
+        point_type = filled_circle,
+        /*key        = "sample points", */
+        points( S ) 
+      ) $
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

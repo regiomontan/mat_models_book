@@ -1,0 +1,43 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+Модель отладки программы
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha : 0.1  $   
+beta  : 0.01 $
+e_0   : 100      /* начальное кол. ошибок */ $
+N     : 120      /* итераций отладки-тестирования */ $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+max_n : N        /* всего итераций, пока кол. ошибок положительно */ $
+e     : [] $
+e     : append( e, [e_0] ) $ 
+   for n : 1 thru N do 
+      if  e[n] > 1.0 then e : append( e, [(1 - alpha*n  + beta)*e[n]] ) 
+      else                ( max_n : n - 1, break ) $
+mE : makelist( [ i - 1 , e[i] ], i, 1, max_n ) ;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d( [ discrete, mE ],
+        [ style, [ points, 1.4, 5, 1 ] ],
+        [ gnuplot_preamble, "set grid" ],
+        /*[ psfile, "debug_model.eps"  ],*/
+        [ legend, false ],
+        [ xlabel, " " ], 
+        [ ylabel, " " ]  
+      );
+9!;
+log(1.0*9!) / log( 10.0 ) + 2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

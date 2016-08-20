@@ -1,0 +1,152 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+SZR зомби-модель
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+alpha : 0.0095    /* infection rate   */ $
+beta  : 0.01      /* attack rate      */ $
+gamma : 0.001    /* reanimation rate */ $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+f(S,Z,R) := -alpha*S*Z                       $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+g(S,Z,R) := alpha*S*Z - beta*S*Z + gamma*R   $
+h(S,Z,R) := beta*S*Z - gamma*R               $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+начальные условия:
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+t0 : 0.0  $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+Z0 : 1    $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+S0 : 100  $
+R0 : 0  $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tN : 9000.0  $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+шаг интегрирования
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+tau : 2 $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+решение методом Рунге-Кутты
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+load( "dynamics" )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+sys: rk( [ f(S,Z,R), g(S,Z,R), h(S,Z,R) ], [ S, Z, R ], [ S0, Z0, R0  ], [ t , t0, tN, tau ] ) $ 
+tS   : makelist( [ sys[i][1] , sys[i][2] ],  i, 1, (tN - t0)/tau + 1 )   $
+tZ   : makelist( [ sys[i][1] , sys[i][3] ],  i, 1, (tN - t0)/tau + 1 )   $
+tR   : makelist( [ sys[i][1] , sys[i][4] ],  i, 1, (tN - t0)/tau + 1 )   $
+
+Mt  : makelist( sys[i][1],  i, 1, (tN - t0)/tau + 1 )   $
+MS  : makelist( sys[i][2],  i, 1, (tN - t0)/tau + 1 )   $
+MZ  : makelist( sys[i][3],  i, 1, (tN - t0)/tau + 1 )   $
+MR  : makelist( sys[i][4],  i, 1, (tN - t0)/tau + 1 )   $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load( "draw" )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+draw2d(    /*terminal       = eps,*/ 
+            points_joined  = true, 
+            line_width     = 1, 
+            color          = dark-blue,
+            grid           = true, 
+            point_type     = 0, 
+            point_size     = 2,
+            key            = "S",
+            points( tS ),
+            color          = dark_red,
+            key            = "Z",
+            points( tZ ),
+            color          = dark_green,
+            key            = "R",
+            points( tR )
+       ) $
+/** фазовая SZ *******************************/
+draw2d(    /*terminal       = eps,*/
+            points_joined  = true, 
+            line_width     = 1, 
+            color          = dark_magenta,
+            grid           = true, 
+            point_type     = 0, 
+            point_size     = 2,
+            key            = "SZ",
+            points( MS, MZ )          
+       ) $
+
+/** фазовая SR *******************************/
+draw2d(    /*terminal       = eps,*/
+            points_joined  = true, 
+            line_width     = 1, 
+            color          = dark_magenta,
+            grid           = true, 
+            point_type     = 0, 
+            point_size     = 2,
+            key            = "SR",
+            points( MS, MR )          
+       ) $
+
+/** фазовая IZ *******************************/
+draw2d(    /*terminal       = eps,*/
+            points_joined  = true, 
+            line_width     = 1, 
+            color          = dark_magenta,
+            grid           = true, 
+            point_type     = 0, 
+            point_size     = 2,
+            key            = "IZ",
+            points( MI, MZ )          
+       ) $
+
+/** фазовая xyz *******************************/
+/*M : matrix( Mx, My, Mz ) $*/
+draw3d( /*title      = "title",*/ 
+        points_joined  = true, 
+        line_width     = 1, 
+        color          = dark_green,
+        grid           = true, 
+        point_type     = 0, 
+        point_size     = 2,
+        /*key        = "Sample from stations 1, 4 and 5",*/
+        points( MS, MI, MR ) 
+      )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

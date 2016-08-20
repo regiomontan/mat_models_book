@@ -1,0 +1,58 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+Распад Xe 133 аппроксимация
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+load (lsquares)$
+M : matrix ( 
+             [  0, 1.000 ], 
+             [  3, 0.694 ], 
+             [  6, 0.459 ],
+             [  9, 0.322 ],
+             [ 12, 0.236 ]  
+           ) $
+
+lsq : lsquares_estimates (  M, [x,y], y = exp(-L*x), [L] ), float $
+l   : rhs( lsq[1][1] ) $ 
+
+print( " approx_lambda = ", float( l ) ) $
+/* настоящая лямбда, период полураспада = 5.245 дней*/
+true_lambda : log(2.0) / 5.245 $
+print ( " TRUE labda = ", true_lambda ) $
+y(x)      := exp( -l*x )             /* аппроксимация      */ $  
+
+diff_y(x) := exp( -true_lambda* x)   /* из дифф. уравнения */ $
+
+/* разностное ур-ние */
+razn_y0   :  makelist([0, 1]) $
+razn_y1   : makelist( [ 3*i, (1.0 - true_lambda*3 )^(3*i) ], i, 1, 4 ) $
+razn_y    : append ( razn_y0, razn_y1 ) ;
+
+draw2d( grid       = true, 
+        color      = dark_red,
+        explicit( y(x),      x, M[1,1] - 0.5, M[5,1] + 0.5 ),
+        color      = dark_blue,
+        explicit( diff_y(x), x, M[1,1] - 0.5, M[5,1] + 0.5 ), 
+        color      = dark_green,
+        point_type = filled_circle,
+        point_size = 1, 
+        points( razn_y ),  
+        color      = dark_red,
+        /*key        = "sample points", */
+        points( M ) 
+      ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

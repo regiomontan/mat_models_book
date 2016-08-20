@@ -1,0 +1,59 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: input   start ] */
+alpha : 0.1    $
+beta  : 0.9    $
+gamma : 0.3    $
+
+x0 : 0.2       $
+y0 : 0.8       $
+z0 : 0.4       $
+
+XX(x) := alpha*x / (beta + x) - gamma*x*y0*z0  /* попул€рность */ $
+
+y(t)  := y0 $
+z(t)  := z0 $
+
+t0  : 0.0       $
+tN  : 250        $
+tau : 0.1       $  
+
+
+/*beta : alpha / gamma*y0*z0 -x0 $ */
+
+
+load( "dynamics" )$
+
+sys: rk(  XX( x ), x, x0, [t , t0, tN, tau ] ) $
+tx   : makelist( [ sys[i][1] , sys[i][2] ],  i, 1, (tN - t0)/tau + 1 )   $
+
+load( "draw" ) $
+draw2d(    /*terminal       = eps,*/
+            points_joined  = true, 
+            line_width     = 1, 
+            color          = dark_green,
+            grid           = true, 
+            point_type     = 0, 
+            point_size     = 2,
+            key            = "x",
+            points( tx ),
+            key            = "y",
+            color          = dark_red,
+            explicit( y(t), t, t0, tN ),
+            key            = "z",
+            color          = black,
+            explicit( z(t), t, t0, tN ) 
+       ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Ќеравество, рост/убывание попул€рности x
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+print( " y0z0 = ", float( y0*z0 ), " <? ", float(alpha / gamma*( beta + x0) ))$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

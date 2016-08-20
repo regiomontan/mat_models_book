@@ -1,0 +1,18 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+решение куб. уравнения
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+solve( gamm^2*zeta*c^3 - gamm*zeta*delta*beta*c^3 - alpha*delta^2*eps, c ) ;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+kill(all);
+/* [wxMaxima: input   end   ] */
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

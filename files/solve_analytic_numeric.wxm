@@ -1,0 +1,42 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+решение дифф. уравнения
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+'diff(x,t) = alpha*x /( beta + x ) $
+ode2(%, x, t ) $
+
+alpha : 0.1  $
+beta  : 0.9  $
+x0    : 0.1  $
+t0  : 0.0    $
+tN  : 1200.0 $
+tau : 1.0    $
+
+XX(x) := alpha*x /( beta + x ) $
+
+
+
+load( "dynamics" ) $
+sys: rk(  XX( x ), x, x0, [ t , t0, tN, tau ] 
+       ) $
+tx   : makelist( [ sys[i][1] , sys[i][2] ],  i, 1, (tN - t0)/tau + 1 )   $
+
+load( "draw" )$
+draw2d(    /*terminal       = eps,*/
+            points_joined  = true, 
+            line_width     = 1, 
+            color          = dark_green,
+            grid           = true, 
+            point_type     = 0, 
+            point_size     = 2,
+            key            = "x",
+            points( tx )          
+       ) $
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

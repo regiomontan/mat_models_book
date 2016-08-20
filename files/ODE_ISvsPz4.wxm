@@ -1,0 +1,131 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 12.01.0 ] */
+
+/* [wxMaxima: comment start ]
+-----------------------------------------------------------------
+ИС-2 против PzVI Tiger
+-----------------------------------------------------------------
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+eq1 : 'diff( r(t), t ) = -9*0.1*b(t) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+eq2 : 'diff( b(t), t ) = -3*0.9*r(t)  $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+начальные условия: ----------------------------------------------
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+t0 : 0$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+r0 : 20$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+b0 : 20$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tN : 1$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+atvalue( r(t), t = t0, r0 )         /* r(t0) = r0 */  $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+atvalue( b(t), t = t0, b0 )         /* b(t0) = b0 */  $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+решение системы дифф. уравнений: -----------------------------------
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+d : desolve( [ eq1, eq2 ], [ r(t), b(t) ] );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rr : rhs( d[1] ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+bb : rhs( d[2] ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Результат боя -- кто и когда победил.
+Синие уничтожены? Решение уравнения b(t) = 0 методом Ньютона: -------
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+tp : - 100            /* момент победы или поражения */ $
+load( "mnewton" )$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+newton_b : mnewton( [bb = 0], [t], [t0] ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+if    newton_b # [] 
+then  block( tp : rhs( newton_b[1][1] ), 
+             print( "Синие уничтожены через ", tp, " мин." ),
+             print( "У Красных осталось ", 
+             round( ev( rr, t = tp, float )), " танков." )   
+           );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+Красные уничтожены? Решение уравнения r(t) = 0 методом Ньютона: -------
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+newton_r : mnewton( [rr = 0], [t], [t0] ) $
+if    newton_r # [] 
+then  block( tp : rhs( newton_r[1][1] ), 
+             print( "Красные уничтожены через ", tp, " мин." ),
+             print( "У Синих осталось ", 
+             round( ev( bb, t = tp, float )), " танков." )   
+           );
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+B(t) := if t <= tp then bb else ev( bb, t = tp ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+R(t) := if t <= tp then rr else ev( rr, t = tp ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+plot2d( [ R(t), B(t) ], [ t,  t0, tN ], 
+        [gnuplot_preamble, "set grid;"],  
+        [color, red, blue, gray], 
+        [xlabel, "t"], [legend, "r(t)", "b(t)"])$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tex(%)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tex(%)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tex(%)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tex(%)$
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

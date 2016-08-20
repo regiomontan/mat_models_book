@@ -1,0 +1,16 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: comment start ]
+решение системы уравнений
+   [wxMaxima: comment end   ] */
+
+/* [wxMaxima: input   start ] */
+S1 : c_0*A*S*( 1 - A/h ) - a       $
+S2 : r_0*( 1 - A /2/b )*S*(1 - S)  $
+solve( [S1, S2], [A, S] ) ;
+/* [wxMaxima: input   end   ] */
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

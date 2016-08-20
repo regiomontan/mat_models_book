@@ -1,0 +1,36 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: input   start ] */
+load (lsquares)$
+M : matrix ( 
+             [1, 1], 
+             [2, 4], 
+             [3, 9] 
+           ) $
+
+lsq : lsquares_estimates (  M, [x,y], y = A*x + B, [A, B] ), float $
+a   : rhs( lsq[1][1] ) $ 
+b   : rhs( lsq[1][2] ) $
+
+
+print( " a = ", float( a ) ) $
+print( " b = ", float( b ) ) $
+
+
+y(x) := a*x + b$ 
+
+draw2d( grid       = true, 
+        color      = dark_green,
+        /*key        = "approximation", */
+        explicit( y(x), x, M[1,1] - 0.5, M[3,1] + 0.5 ),
+        point_size = 1,
+        color      = dark_red,
+        point_type = filled_circle,
+        /*key        = "sample points", */
+        points( M ) 
+      ) $
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

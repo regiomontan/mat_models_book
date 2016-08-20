@@ -1,0 +1,59 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 0.8.6 ] */
+
+/* [wxMaxima: input   start ] */
+/*fpprec : 10000 ;*/
+load (lsquares)$
+M : matrix ( 
+             [0.33/24,  58.2], 
+             [1.0/24,   44.2], 
+             [8.8/24,   35.8],
+             [24.0/24,  33.7],
+             [48.0/24,  27.8],
+             [144.0/24, 25.4]
+            /* [744.0/24, 21.1]*/   
+           ) $
+
+lsq : lsquares_estimates (  M, [x,y], y = A*exp( -B*x ) + C, [A, B, C] ), float $
+a   : rhs( lsq[1][1] ) $ 
+b   : rhs( lsq[1][2] ) $
+c   : rhs( lsq[1][3] ) $
+
+print( " a = ", float( a ) ) $
+print( " b = ", float( b ) ) $
+print( " c = ", float( c ) ) $
+
+y(x) := a*exp( -b*x ) + c    $ 
+
+/* максимальное уклонение в узлах: ******************/
+max_error : max( abs( 1.0 - y(M[1,1]) / M[1,2] ), 
+                 abs( 1.0 - y(M[2,1]) / M[2,2] ), 
+                 abs( 1.0 - y(M[3,1]) / M[3,2] ), 
+                 abs( 1.0 - y(M[4,1]) / M[4,2] ), 
+                 abs( 1.0 - y(M[5,1]) / M[5,2] ),
+                 abs( 1.0 - y(M[6,1]) / M[6,2] ) 
+                ) $
+print("max error approximation: ", max_error ) $ 
+
+print("init forget ?: ", y(0.0) ) $
+
+
+draw2d( grid       = true, 
+        color      = dark_green,
+        /*key        = "approximation", */
+        explicit( y(x), x, M[1,1] - 0.1, M[6,1] + 5.5 ),
+        point_size = 1,
+        color      = dark_red,
+        point_type = filled_circle,
+        /*key        = "sample points", */
+        points( M ) 
+      ) $
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: comment start ]
+
+   [wxMaxima: comment end   ] */
+
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

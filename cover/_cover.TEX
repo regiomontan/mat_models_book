@@ -1,0 +1,68 @@
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%=                                        =%%
+ %%=  Обложка                               =%%
+ %%=  11.2014                                =%%
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \documentclass[12pt, a4paper] {book}
+  \usepackage{vz_cover}
+
+  \begin{document}
+  \pagecolor{cover_color} % цвет фона
+
+%\thisfancypage
+%{%
+%   \color{black}
+%   \setlength{\pagebox}{\pagebox}
+%   \fancyoval(21, 94)
+%}
+%{}
+
+\fancypage{\setlength{\fboxsep}{\fboxsep}\ovalbox}{}
+
+\thispagestyle{empty}             %% убрал № страницы;
+
+
+ \begin{center}
+ {\phantom{I}}\vspace{2.0cm}
+   \LARGE\bf\textsc
+   {
+    В.\,И.\,Зенкин \\
+     \vspace{2ex}
+     {КУРС МАТЕМАТИЧЕСКОГО }         \\
+     {И КОМПЬЮТЕРНОГО МОДЕЛИРОВАНИЯ}
+     }
+
+\vspace{14ex}
+%++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ \begin{figure}[!h]
+ \begin{center}
+ \includegraphics[height = 0.48\textheight, width = 0.86\textwidth]
+                  {vz_tree.pdf}
+ \end{center}
+ \end{figure}
+ %+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  %\vspace{16ex}
+
+  %Калининград,~\YEAR \\
+
+ %%}
+ %\vspace{0.61cm}
+ %\large{$\copyright$ В.\,Зенкин. Калининград, \YEAR}\\
+% \vspace{0.2cm}
+% \small{Typeset by \LaTeX \, (MiK\TeX \; 2.7)}
+
+\end{center}
+
+
+
+
+%% конец титула; %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \thispagestyle{empty}             %% убрал № страницы;
+% \tableofcontents
+% \newpage
+ \thispagestyle{empty}             %% убрал № страницы;
+
+
+ \end{document}
